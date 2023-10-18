@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>users</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
+</head>
+<body>
+    <main>
+        <div class="ui container">
+            {% if username %}
+            <div class="ui positive message">
+                Welcome, {{username}}
+            </div>
+            {% endif%}
+            <table class="ui celled table">
+                <thead>
+                  <tr><th>Name</th>
+                  <th>Password</th>
+                </tr></thead>
+                <tbody>
+                    {% for user in users%}
+                    <tr>
+                        <td data-label="Name">{{user.name}}</td>
+                        <td data-label="Password">{{user.pwd}}</td>
+                      </tr>
+                    {%  endfor %}
+                </tbody>
+              </table>
+        </div>
+    </main>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+</body>
