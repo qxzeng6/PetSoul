@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<!-- <script src="https://cdn.staticfile.org/vue/2.7.0/vue.min.js"></script> -->
+		<link  rel="stylesheet" type="text/css" href="./css/common.css"> 
+		<link rel="stylesheet" href="./css/elindex.css">
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+		<script src="./js/axios.min.js"></script>
+		<script src="./js/vue.min.js"></script>
+		<script src="./js/elindex.js"></script>
+		<style>
+			.login-form{
+				height: 500px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				width: 100%;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="login">
+			<div class="app-header">
+			  	<div class="app-head-inner">
+			  		<div style="position: relative;">
+			  			<img class="logo" @click="isShow = !isShow" src="./assets/logo.png">
+			  			<div v-if="isShow" class="selectBox">
+			  				<h2>All</h2>
+			  				<div v-for="product in productList">
+			  					<a style="color: blue;" :href="product.url">{{product.title}}</a>
+			  				</div>
+			  			</div>
+			  		</div>
+			  
+			  		<div class="head-nav">
+			  			<ul v-if="username" class="nav-list">
+			  				<li> {{ username }}</li>
+			  				<li class="nav-pile">|</li>
+			  				<li @click="quit">Sign out</li>
+			  				<li class="nav-pile">|</li>
+			  				<li @click="aboutClick">Dashboard</li>
+			  			</ul>
+			  			<ul v-else class="nav-list">
+			  				<li @click="logClick">Sign In</li>
+			  				<li class="nav-pile">|</li>
+			  				<li @click="toregister">Sign up</li>
+			  				<li class="nav-pile">|</li>
+			  				<li @click="aboutClick">Dashboard</li>
+			  			</ul>
+			  		</div>
+			  	</div>
+			  </div>
+			<div class="login-form">
+			  <div class="g-form">
+			    <div class="g-form-line">
+			      <span class="g-form-label">Username:</span>
+			      <div class="g-form-input">
+			        <input type="text"
+			               v-model="form.username" placeholder="Please enter the username">
+			      </div>
+			      <div class="g-form-error">{{ userErrors.errorText }}</div>
+			    </div>
+			    <div class="g-form-line">
+			      <span class="g-form-label">Password:</span>
+			      <div class="g-form-input">
+			        <input type="password"
+			               v-model="form.password" placeholder="Please enter the password">
+			      </div>
+			      <div class="g-form-error">{{ passwordErrors.errorText }}</div>
+			    </div>
+			    <div class="g-form-line" style="display: flex;margin-top: 20px;">
+					<div >
+					  <a class="button" @click="toregister">Register</a>
+					</div>
+			      <div style="margin-left: 40px;" >
+			        <a class="button" @click="onLogin">Login</a>
+			      </div>
+			    </div>
+			    <p>{{ errorText }}</p>
+			  </div>
+			</div>
+			<el-dialog title="Choose The Role" :visible.sync="dialogTableVisible">
+				<div style="margin-bottom: 20px;text-align: center;">
+					<el-radio v-model="type" label="1">Home</el-radio>
+					  <el-radio v-model="type" label="2">Business</el-radio>
+					  <div style="margin-top: 40px;">
+						   <el-button type="success" @click="next" >Next</el-button>
+					  </div>
+				</div>
+				
+			</el-dialog>
+		</div>
+		<script>
+		new Vue({
+		  el: '#login',
+		    data() {
+		      return {
+				  type:"1",
+				  dialogTableVisible:false,
+		        usernameModel: '',
+		        passwordModel: '',
+		        errorText: '',
+		        form:{
+		          username:'',
+		           password:''
+		        },
+				isShow: false,
+				isShowAboutDialog: false,
+				isShowLogDialog: false,
+				// isShowRegDialog: false,
+				isShowJudgeDialog: false,
+				username: '',
+				productList: [{
+						title: 'Dashboard',
+						url: './index.html'
+					}, {
+						title: 'Order List',
+						url: './orderlist.html'
+					}, {
+						title: 'Personal Information',
+						url: './userDetail.html'
+					}],
+		      }
+		    },
+		    computed: {
+		      userErrors() {
+		        let errorText, status;
+		
+		        if (!this.form.username) {
+		          status = false
+		          errorText = 'Username is required.';
+		        }else{
+		          status = true
+		          errorText = '';
+		        }
+		        return {
+		          status,
+		          errorText
+		        }
+		      },
+		      passwordErrors() {
+		        let errorText, status;
+		        if (!this.form.password) {
+		          status = false
+		          errorText = 'password is required.';
+		        }else if (!/^\w{1,8}$/g.test(this.form.password)) {
+		          status = false;
+		          errorText = 'Password must be 1-8 digits.'
+		        }else{
+		          status = true;
+		          errorText = ''
+		        } 
+		        return {
+		          status,
+		          errorText
+		        }
+		      }
+		    },
+			created() {
+				this.username = window.localStorage.getItem("userName")
+			},
+		    methods: {
+				next(){
+					window.location.href="./register.html?type="+this.type
+				},
+				toregister(){
+					this.dialogTableVisible = true
+				},
+		      onLogin() {
+		        if (!this.userErrors.status || !this.passwordErrors.status) {
+		          this.errorText = 'Wrong username or password'
+		        }
+		        else {
+		          this.errorText = '';
+				  // 合并到后端后,后面去掉ip和端口就可以，
+				  axios.post('/login',this.form)
+				        .then(res => {
+								if(res.data.code ==0){
+									  let username = res.data.data.username?"admin":"customer"
+									  window.localStorage.setItem("userName",username)
+									  window.localStorage.setItem("token",res.data.data.token)
+									  // if("admin" == username){
+								    if(true){
+										  window.location.href="./productInfo.html"
+									  }else{
+										  window.location.href="./index.html"
+									  }
+														  
+								}else{
+								  this.$notify({
+									  title:"Error",
+									  message:res.data.msg,
+									  type:"error"
+								  });
+								}
+							}
+						)
+				        .catch(function (error) { // 请求失败处理
+							 this.$notify({
+							  title:"Error",
+							  message:"Networking error",
+							  type:"error"
+							 });
+				        });
+		        }
+		      },
+			  closeTheForm() {
+			  	this.isShowJudgeDialog = false
+			  },
+			  quit() {
+			  	this.$confirm('Are ypu sure quit？', 'Tips', {
+			  		confirmButtonText: 'Confirm',
+			  		cancelButtonText: 'Cancel',
+			  		type: 'warning'
+			  	}).then(() => {
+			  		window.localStorage.clear()
+			  		this.username = ""
+			  		this.$forceUpdate()
+			  		window.location.href = "./index.html"
+			  	}).catch(() => {
+			  
+			  	});
+			  },
+			  closeDialog(para) {
+			  	this[para] = false
+			  },
+			  aboutClick() {
+			  	window.location.href = "./index.html"
+			  },
+			  logClick() {
+			  	window.location.href = "./login.html"
+			  },
+			  regClick() {
+			  	this.isShowJudgeDialog = true
+			  },
+			  onSuccessLog(data) {
+			  	this.closeDialog('isShowLogDialog');
+			  	this.username = data.username
+			  }
+		    }
+		 })
+		</script>
+	</body>
+	<style>
+	  .g-form-error{
+	    font-size: 12px;
+	    margin-left: 15px;
+	    color: firebrick;
+		margin-top: 5px;
+	  }
+	  .g-form{
+		  display: flex;
+		  flex-direction: column;
+		  align-items: center;
+	  }
+	</style>
+	
+</html>

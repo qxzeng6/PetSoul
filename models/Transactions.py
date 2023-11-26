@@ -23,12 +23,20 @@ class Transactions(db.Model):
 
     product_number = db.Column(db.Integer)
 
-    def __init__(self):
+    def __init__(self, customer_id, product_id, store_id, salesperson_id, order_number, date, salesperson_name, product_number):
+        self.customer_id = customer_id
+        self.product_id = product_id
+        self.store_id = store_id
+        self.salesperson_id = salesperson_id
+        self.order_number = order_number
+        self.date = date
+        self.salesperson_name = salesperson_name
+        self.product_number = product_number
+
         return
 
-
     def __repr__(self):
-        return '<Product %r>' % self.name
+        return '<Transaction %r>' % self.order_number
 
     def __str__(self):
-        return '<Product %s>' % self.name
+        return '<Transaction %s>' % self.order_number

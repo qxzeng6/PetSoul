@@ -9,7 +9,7 @@ class Customers(db.Model):
 
     customer_name = db.Column(db.String(255))
 
-    user_name=db.Column(db.String(255))
+    user_name = db.Column(db.String(255))
 
     password = db.Column(db.String(255))
 
@@ -25,7 +25,7 @@ class Customers(db.Model):
 
     zip_code = db.Column(db.String(10))
 
-    kind = db.Column(db.Integer)  #1 for business user, 0 for home user
+    kind = db.Column(db.Integer)  # 1 for business user, 0 for home user
 
     business_category = db.Column(db.String(255))
 
@@ -43,12 +43,30 @@ class Customers(db.Model):
 
     pet_kind = db.Column(db.String(255))
 
-    def __init__(self):
+    def __init__(self,customer_name, user_name, password, email, phone_number, street, city, state, zip_code, kind,
+                 business_category, annual_income,gender,age,income,marriage,date_of_birth,pet_kind):
+        self.customer_name = customer_name
+        self.user_name = user_name
+        self.password = password
+        self.email = email
+        self.phone_number = phone_number
+        self.street = street
+        self.city = city
+        self.state = state
+        self.zip_code = zip_code
+        self.kind = kind
+        self.business_category = business_category
+        self.annual_income = annual_income
+        self.gender = gender
+        self.age = age
+        self.income = income
+        self.marriage = marriage
+        self.date_of_birth = date_of_birth
+        self.pet_kind = pet_kind
         return
 
-
     def __repr__(self):
-        return '<Product %r>' % self.name
+        return '<Customer %r>' % self.user_name
 
     def __str__(self):
-        return '<Product %s>' % self.name
+        return '<Customer %s>' % self.user_name

@@ -1,0 +1,343 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+	   v2.0 | 20110126
+	   License: none (public domain)
+	*/
+	
+		html,
+		body,
+		div,
+		span,
+		applet,
+		object,
+		iframe,
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6,
+		p,
+		blockquote,
+		pre,
+		a,
+		abbr,
+		acronym,
+		address,
+		big,
+		cite,
+		code,
+		del,
+		dfn,
+		em,
+		img,
+		ins,
+		kbd,
+		q,
+		s,
+		samp,
+		small,
+		strike,
+		strong,
+		sub,
+		sup,
+		tt,
+		var,
+		b,
+		u,
+		i,
+		center,
+		dl,
+		dt,
+		dd,
+		ol,
+		ul,
+		li,
+		fieldset,
+		form,
+		label,
+		legend,
+		table,
+		caption,
+		tbody,
+		tfoot,
+		thead,
+		tr,
+		th,
+		td,
+		article,
+		aside,
+		canvas,
+		details,
+		embed,
+		figure,
+		figcaption,
+		footer,
+		header,
+		hgroup,
+		menu,
+		nav,
+		output,
+		ruby,
+		section,
+		summary,
+		time,
+		mark,
+		audio,
+		video {
+			margin: 0;
+			padding: 0;
+			border: 0;
+			font-size: 100%;
+			font: inherit;
+			vertical-align: baseline;
+		}
+	
+		/* HTML5 display-role reset for older browsers */
+		article,
+		aside,
+		details,
+		figcaption,
+		figure,
+		footer,
+		header,
+		hgroup,
+		menu,
+		nav,
+		section {
+			display: block;
+		}
+	
+		body {
+			line-height: 1;
+		}
+	
+		ol,
+		ul {
+			list-style: none;
+		}
+	
+		blockquote,
+		q {
+			quotes: none;
+		}
+	
+		blockquote:before,
+		blockquote:after,
+		q:before,
+		q:after {
+			content: '';
+			content: none;
+		}
+	
+		table {
+			border-collapse: collapse;
+			border-spacing: 0;
+		}
+	
+		/* ==== */
+		a {
+			color: inherit;
+			text-decoration: none;
+		}
+	
+		body {
+			background: #f0f2f5;
+			font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", "Hiragino Sans GB W3", "Microsoft YaHei UI", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+			font-size: 14px;
+			color: #444;
+		}
+	
+		.app-header {
+			background: #363636;
+			color: #b2b2b2;
+			height: 90px;
+			line-height: 90px;
+			width: 100%;
+		}
+	
+		.app-head-inner {
+			width: 1200px;
+			margin: 0 auto;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+		}
+	
+		.app-head-inner .selectBox {
+			position: absolute;
+			z-index: 1;
+			top: 75px;
+			left: -20px;
+	
+			background-color: rgba(255, 255, 255, 0.9);
+			width: 300px;
+			height: 600px;
+		}
+	
+		.app-head-inner .logo {
+			margin-top: 8px;
+			height: 70px;
+			width: 70px;
+			cursor: pointer;
+		}
+	
+		.app-head-inner .selectBox {
+			margin: 15px;
+			height: 500px;
+			width: 200px;
+			box-shadow: 0 0 1px #ddd;
+			text-align: center;
+		}
+	
+		.app-head-inner .selectBox .hr {
+			margin-bottom: 10px;
+		}
+	
+		.app-head-inner .selectBox h2 {
+			background: #4fc08d;
+			color: #fff;
+			padding: 10px 15px;
+			margin-bottom: 20px;
+		}
+	
+		.app-head-inner .selectBox h3 {
+			padding: 0 15px 5px 15px;
+			font-weight: bold;
+			color: #222;
+			height: 30px;
+		}
+	
+		.app-head-inner .selectBox ul {
+			padding: 10px 15px;
+		}
+	
+		.app-head-inner .selectBox li {
+			padding: 5px;
+			height: 30px;
+			color: #6b6b6b;
+		}
+	
+		.app-header {
+			/* float: left; */
+		}
+	
+		.app-header img {
+			width: 50px;
+		}
+	
+		/* .head-nav {
+	  }
+	
+	  .head-nav ul {
+	  } */
+	
+		.head-nav li {
+			cursor: pointer;
+			float: left;
+		}
+	
+		.nav-pile {
+			padding: 0 10px;
+		}
+	
+		.app-foot {
+			text-align: center;
+			height: 80px;
+			width: 100%;
+			line-height: 80px;
+			background: #e3e4e8;
+			clear: both;
+			margin-top: 30px;
+		}
+	
+		.container {
+			width: 1200px;
+			margin: 0 auto;
+		}
+	
+		.hr {
+			height: 1px;
+			width: 100%;
+			background: #ddd;
+		}
+	
+		.button {
+			background: #4fc08d;
+			color: #fff;
+			display: inline-block;
+			padding: 10px 20px;
+			cursor: pointer;
+		}
+	
+		.button:hover {
+			background: #4fc08d;
+		}
+	
+		/* .g-form {
+	
+	  } */
+	
+		.g-form-line {
+			padding: 15px 0;
+			position: relative;
+	
+		}
+	
+		.g-form-error {
+			position: absolute;
+			left: 90px;
+		}
+	
+		.g-form-label {
+			width: 100px;
+			font-size: 16px;
+			display: inline-block;
+		}
+	
+		.g-form-input {
+			display: inline-block;
+		}
+	
+		.g-form-input input {
+			height: 30px;
+			width: 200px;
+			line-height: 30px;
+			vertical-align: middle;
+			padding: 0 10px;
+			border: 1px solid #ccc;
+		}
+	
+		.g-form-btn {
+			padding-left: 100px;
+		}
+		
+		.selectBox{
+			z-index: 99999 !important;
+		}
+		.selectBox h2{
+			background-color: rgb(218, 235, 237) !important ;
+			color: black !important;
+		}
+		.selectBox  a{
+			color: rgb(1, 111, 104) !important;
+		}
+		.daoitems{
+			width: 180px;
+			background-color: #6b6b6b;
+			height: calc(100vh - 90px) ;
+			position: absolute;
+			top: 90px;
+		}
+		.daoitems a{
+			display: block;
+			height: 50px;
+			background-color: #ddd;
+			border-bottom: 2px solid lightgray;
+			line-height: 50px;
+			padding-left: 10px;
+			font-size: 16px;
+			cursor: pointer;
+		}
+		a.active{
+			background-color: white;
+		}

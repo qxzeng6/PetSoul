@@ -1,48 +1,303 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>register</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
-</head>
-<body>
-    <main>
-        <div class="ui container" style="max-width: 30em !important;">
-            <div class="ui container">
-                <div class="ui middle aligned center aligned grid">
-                    <div class="column">
-                        <h2 class="ui teal image header">
-                            <div class="content">
-                                Register
-                            </div>
-                        </h2>
-                        <!-- specify the python function used when submit the form-->
-                        <form class="ui large form"  method="post" action="{{url_for('register')}}">
-                            <div class="ui  segment">
-                                <div class="field">
-                                    <div class="ui left icon input">
-                                        <i class="user icon"></i>
-                                        <input type="text" name="username" placeholder="username">
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <div class="ui left icon input">
-                                        <i class="lock icon"></i>
-                                        <input type="password" name="password" placeholder="password">
-                                    </div>
-                                </div>
-                                <button class="ui fluid large teal submit button">Register</button>
-                            </div>
+<html>
+ <head>
+  <meta charset="utf-8">
+  <title>Detail</title>
+  <link rel="stylesheet" type="text/css" href="./css/common.css">
+  <link rel="stylesheet" href="./css/elindex.css">
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <script src="./js/axios.min.js"></script>
+  <script src="./js/vue.min.js"></script>
+  <script src="./js/elindex.js"></script>
+ </head>
+ <body>
+  <div id="detail">
+   <div class="app-header">
+    <div class="app-head-inner">
+     <div style="position: relative;">
+      < img class="logo" @click="isShow = !isShow" src="./assets/logo.png">
+      <div v-if="isShow" class="selectBox">
+       <h2>All</h2>
+       <div v-for="product in productList">
+        <a style="color: blue;" :href="product.url">{{product.title}}</a >
+       </div>
+      </div>
+     </div>
+     <div class="head-nav">
+      <ul v-if="username" class="nav-list">
+       <li> {{ username }}</li>
+       <li class="nav-pile">|</li>
+       <li @click="quit">Sign out</li>
+       <li class="nav-pile">|</li>
+       <li @click="aboutClick">Dashboard</li>
+      </ul>
+      <ul v-else class="nav-list">
+       <li @click="logClick">Sign In</li>
+       <li class="nav-pile">|</li>
+       <li @click="toregister">Sign up</li>
+       <li class="nav-pile">|</li>
+       <li @click="aboutClick">Dashboard</li>
+      </ul>
+     </div>
+    </div>
+   </div>
+   <div >
+    <div class="login-form-register" >
+     <div class="g-form">
+      <div class="g-form-line">
+       <span class="g-form-label">Username:</span>
+       <div class="g-form-input">
+        <input type="text" v-model="from.user_name" placeholder="Please enter the username">
+       </div>
+      </div>
+      <div class="g-form-line">
+       <span class="g-form-label">Password:</span>
+       <div class="g-form-input">
+        <input type="text" v-model="from.password" placeholder="Please enter the password">
+       </div>
+      </div>
+      <div class="g-form-line">
+       <span class="g-form-label">E-mail:</span>
+       <div class="g-form-input">
+        <input type="text" v-model="from.email" placeholder="Please enter the E-mail number">
+       </div>
+      </div>
+      <div class="g-form-line">
+       <span class="g-form-label">Tel:</span>
+       <div class="g-form-input">
+        <input type="text" v-model="from.phone_number" placeholder="Please enter the Tel number">
+       </div>
+      </div>
+      <div class="g-form-line">
+       <span class="g-form-label">Street:</span>
+       <div class="g-form-input">
+        <input type="text" v-model="from.street" placeholder="Please enter the street">
+       </div>
+      </div>
+      <div class="g-form-line">
+       <span class="g-form-label">City:</span>
+       <div class="g-form-input">
+        <input type="text" v-model="from.city" placeholder="Please enter the E-mail city">
+       </div>
+      </div>
+      <div class="g-form-line">
+       <span class="g-form-label">State:</span>
+       <div class="g-form-input">
+        <input type="text" v-model="from.state" placeholder="Please enter the state">
+       </div>
+      </div>
+      <div class="g-form-line">
+       <span class="g-form-label">Zipcode:</span>
+       <div class="g-form-input">
+        <input type="text" v-model="from.zip_code" placeholder="Please enter the zipcode">
+       </div>
+      </div>
+      <div class="g-form-line">
+       <span class="g-form-label">Name:</span>
+       <div class="g-form-input">
+        <input type="text" v-model="from.customer_name" placeholder="Please enter your name">
+       </div>
+      </div>
+      <div v-if="type ==1" class="g-form-line">
+       <span class="g-form-label">Age:</span>
+       <div class="g-form-input">
+        <input type="number" v-model="from.age" placeholder="Please enter your age">
+       </div>
+      </div>
+      <div v-if="type ==1" class="g-form-line" style="display: flex;align-items: center;">
+       <span class="g-form-label">Gender:</span>
+       <div>
+        <el-radio style="width: 10px;height: 10px;margin-left: 20px;" v-model="from.gender" label="1">Boy</el-radio>
+        <el-radio style="margin-left: 20px;" v-model="from.gender" label="2">Girl</el-radio>
+       </div>
+      </div>
+      <div v-if="type ==1" class="g-form-line">
+       <span class="g-form-label">Income:</span>
+       <div class="g-form-input">
+        <input type="number" v-model="from.income" placeholder="Please enter your income">
+       </div>
+      </div>
+      <div v-if="type ==1" class="g-form-line" style="display: flex;align-items: center;">
+       <span class="g-form-label">Marriage:</span>
+       <div>
+        <el-radio style="width: 10px;height: 10px;margin-left: 20px;" v-model="from.marriage" label="1">Yes</el-radio>
+        <el-radio style="margin-left: 20px;" v-model="from.marriage" label="2">No</el-radio>
+       </div>
+      </div>
+      <div v-if="type ==1" class="g-form-line">
+       <span class="g-form-label">Pet Kind:</span>
+       <div class="g-form-input">
+        <input type="text" v-model="from.pet_kind" placeholder="Please enter your pet kind">
+       </div>
+      </div>
+      <div v-if="type ==2" class="g-form-line">
+       <span class="g-form-label">Annual Income:</span>
+       <div class="g-form-input">
+        <input type="text" v-model="from.annual_income" placeholder="Please enter your annual income">
+       </div>
+      </div>
+      <div v-if="type ==2" class="g-form-line">
+       <span class="g-form-label">Bussiness Category:</span>
+       <div class="g-form-input">
+        <input type="text" v-model="from.business_category" placeholder="Please enter your business category">
+       </div>
+      </div>
+      <div class="g-form-line">
+       <div class="g-form-btn">
+        <a class="button" @click="onRegister">Sign Up</a >
+       </div>
+      </div>
+     </div>
+    </div>
 
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
+   </div>
+   <el-dialog title="Choose The Role" :visible.sync="dialogTableVisible">
+    <div style="margin-bottom: 20px;text-align: center;">
+     <el-radio v-model="type" label="1">Home</el-radio>
+       <el-radio v-model="type" label="2">Business</el-radio>
+       <div style="margin-top: 40px;">
+         <el-button type="success" @click="next" >Next</el-button>
+       </div>
+    </div>
 
+   </el-dialog>
+  </div>
+  <script>
+   new Vue({
+    el: '#detail',
+    data:{
+     type:"1",
+     dialogTableVisible:false,
+     isShow: false,
+     isShowAboutDialog: false,
+     isShowLogDialog: false,
+     // isShowRegDialog: false,
+     isShowJudgeDialog: false,
+     username: '',
+     productList: [{
+      title: 'Dashboard',
+      url: './index.html'
+     }, {
+      title: 'Order List',
+      url: './orderlist.html'
+     }, {
+      title: 'Personal Information',
+      url: './userDetail.html'
+     }],
+     from: {
+      user_name: '',
+      password: '',
+      phone_number: '',
+      email: '',
+      customer_name: '',
+      street: '',
+      city: '',
+      state: '',
+      zip_code: '',
+      age: '',
+      gender: '',
+      marriage: '',
+      pet_kind: '',
+      annual_income: '',
+      business_category: '',
+      income: '',
+      kind: this.type
+     },
+     msg:"123",
+     type:1
+    },
+    created() {
+     this.username = window.localStorage.getItem("userName")
+    },
+    mounted() {
+     let a = window.location.href
+     if(a.indexOf("?type=") ==-1){
+      window.location.href="./index.html"
+     }else{
+      this.type = a.split("?type=")[1]
+     }
+    },
+    methods:{
+     next(){
+      window.location.href="./register.html?type="+this.type
+     },
+     toregister(){
+      this.dialogTableVisible = true
+     },
+     closeTheForm() {
+      this.isShowJudgeDialog = false
+     },
+     quit() {
+      this.$confirm('Are ypu sure quit？', 'Tips', {
+       confirmButtonText: 'Confirm',
+       cancelButtonText: 'Cancel',
+       type: 'warning'
+      }).then(() => {
+       window.localStorage.clear()
+       this.username = ""
+       this.$forceUpdate()
+       window.location.href = "./index.html"
+      }).catch(() => {
 
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
-</body>
+      });
+     },
+     closeDialog(para) {
+      this[para] = false
+     },
+     aboutClick() {
+      window.location.href = "./index.html"
+     },
+     logClick() {
+      window.location.href = "./login.html"
+     },
+     regClick() {
+      this.isShowJudgeDialog = true
+     },
+     onSuccessLog(data) {
+      this.closeDialog('isShowLogDialog');
+      this.username = data.username
+     },
+     onRegister() {
+      // axios.post('http://43.138.186.241:8099/djs-api/api/register', this.from)
+      axios.post('http://192.168.1.157:8080/register', this.from)
+       .then((res) => {
+        if(res.data.code == 0){
+         window.location.href="./login.html"
+        }else{
+         this.$notify({
+          title: 'Error',
+          message: res.data.msg,
+          type: "error"
+         });
+        }
+       }, (error) => {
+        this.$notify({
+          title: 'Error',
+          message: 'Networking error',
+          type: "error"
+        });
+
+       })
+     },
+    },
+   })
+  </script>
+ </body>
+</html>
+<style>
+ .login-form-register{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  width: 900px;
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: 40px;
+  border-radius: 10px;
+ }
+ .g-form-input{
+  margin-left: 20px;
+ }
+</style>
