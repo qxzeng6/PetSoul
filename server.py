@@ -94,6 +94,41 @@ def login():
         return "is CORS working?"
 
 
+@app.route("/productdetail", methods=["GET"])
+def ProductDetailProvider():
+    if request.method == "GET":
+        product_id = request.args.get("product_id")
+        print("product_id: ", product_id)
+        product = Product.query.filter_by(product_id=product_id).first()
+        if product is None:
+            return {"code": 404, "msg": "no such product!"}
+        else:
+            product_dict = model_to_dict(product)
+            print("product_dict: ", product_dict)
+            return {"code": 200, "msg": "found it!", "data": {"content": product_dict}}
+        # return "developing..."
+
+
+@app.route("/userdetail", methods=["GET"])
+def UserDetailProvider():
+    userName = request.args.get("username")
+    user = Customers.query.filter_by(user_name=userName).first()
+    if user is None:
+        return {"code": 404, "msg": "no such user!"}
+    else:
+        user_dict = model_to_dict(user)
+        print("user_dict: ", user_dict)
+        return {"code": 200, "msg": "found it!", "data": {"content": user_dict}}
+
+
+def model_to_dict(model_instance):
+    result = {}
+    for key, value in model_instance.__dict__.items():
+        if not key.startswith('_') and key != 'metadata':
+            result[key] = value
+    return result
+
+
 @app.route("/user/<userName>/update", methods=["POST", "OPTIONS", "GET"])
 def UserInfoUpdater(userName):
     if userName == "ADMIN":
@@ -118,7 +153,7 @@ def get_image(filename):
 def UserPurchase():
     userName = request.args.get("username")
     product_id = request.args.get("product_id")
-    buy_amount = request.args.get("buy_number")
+    buy_amount = int(request.args.get("buy_number"))
     print("product_id: ", product_id)
     product_to_update = Product.query.get(product_id)
     print("product_to_update: ", product_to_update)
@@ -278,15 +313,15 @@ def listAllTransactionInfo():
     print("transaction_id: ", transaction_id)
     store_id = request.args.get("store_id")
     print("store_id: ", store_id)
-    region_id = request.args.get("region_id")
+    salesperson_id = request.args.get("salesperson_id")
     transactions = Transactions.query
     columns = Transactions.__table__.columns.keys()
     if transaction_id is not None and transaction_id != "":
         transactions = transactions.filter_by(id=transaction_id)
     if store_id is not None and store_id != "":
         transactions = transactions.filter_by(store_id=store_id)
-    if region_id is not None and region_id != "":
-        transactions = transactions.filter_by(region_id=region_id)
+    if salesperson_id is not None and salesperson_id != "":
+        transactions = transactions.filter_by(salesperson_id=salesperson_id)
     transactions = transactions.all()
     transactions_dict_list = [{column: getattr(transaction, column) for column in columns} for transaction in
                               transactions]
@@ -408,7 +443,9 @@ def listAllProductInfo_Index():
     products = Product.query
     columns = Product.__table__.columns.keys()
     if product_name is not None and product_name != "":
-        products = products.filter_by(product_name=product_name)
+        products = products.filter(Product.product_name.ilike(f"%{product_name}%"))
+        print("products: ", products)
+
     products = products.all()
     products_dict_list = [{column: getattr(product, column) for column in columns} for product in products]
     return {"code": 200, "msg": "success",

@@ -36,7 +36,7 @@ class Transactions(db.Model):
         return
 
     def __repr__(self):
-        return '<Transaction %r>' % self.order_number
+        return '<Transaction %r>' % self.id
 
     def __str__(self):
-        return '<Transaction %s>' % self.order_number
+        return '<Transaction %s>' % self.id
