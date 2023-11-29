@@ -1,0 +1,27 @@
+version: '3'
+services:
+  db:
+    image: mysql:8.2.0
+    environment:
+#       MYSQL_ROOT_PASSWORD:
+      MYSQL_DATABASE: db
+      MYSQL_USER: qzeng6
+      MYSQL_PASSWORD: 123
+      MYSQL_ROOT_PASSWORD: 123
+#      MYSQL_TCP_PORT: 3306
+    ports:
+      - "3306:3306"
+    expose:
+      - '3306'
+#    volumes:
+#      - my-db:/var/lib/mysql
+
+
+  app:
+    build: .
+    restart: always
+#    command: [ "./wait-for-it.sh", "mysql:3306", "--", "your-app-start-command" ]
+    environment:
+      WAIT_HOSTS:  db:3306
+    ports:
+      - '8080:8080'
