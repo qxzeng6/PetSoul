@@ -23,10 +23,10 @@ class Product(db.Model):
 
     image = db.Column(db.String(500))
 
-    def __init__(self, product_name, price, salepersion_id,inventory_amount, product_kind, product_description, sold_quantity, image):
+    def __init__(self, product_name, price, saleperson_id,inventory_amount, product_kind, product_description, sold_quantity, image):
         self.product_name = product_name
         self.price = price
-        self.saleperson_id = salepersion_id
+        self.saleperson_id = saleperson_id
         self.inventory_amount = inventory_amount
         self.product_kind = product_kind
         self.product_description = product_description

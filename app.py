@@ -19,7 +19,7 @@ migrate = Migrate(app, db)
 app.config.from_object('config')
 UPLOAD_FOLDER = 'product_Images'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-engine = db.create_engine("mysql+pymysql://root:@127.0.0.1:3306/db")
+engine = db.create_engine("mysql+pymysql://root:@db:3306/db")
 # load config information, including SQLALCHEMY_DATABASE_URI
 # SQLALCHEMY_DATABASE_URI = "database+drive://username:password@localhost:port/datbase?other configs"
 #                    example:mysql+pymysql://root:@127.0.0.1:3306/db

@@ -7,6 +7,8 @@ def parseStoreInfo(content):
     store_name = content.get('store_name')
     print("store_name: ", store_name)
     region_id = content.get('region_id')
+    if region_id == "":
+        region_id = 0
     print("region_id: ", region_id)
     parent_region = Region.query.filter_by(region_id=region_id).first()
     print("parent_region: ", parent_region)
@@ -24,8 +26,12 @@ def parseStoreInfo(content):
     state = content.get('state')
     print("store_state: ", state)
     zip_code = content.get('zipcode')
+    if zip_code == "":
+        zip_code = 0
     print("store_zip_code: ", zip_code)
     number_of_salespersons = content.get('number_of_salepersons')
+    if number_of_salespersons == "":
+        number_of_salespersons = 0
     print("number_of_salespersons: ", number_of_salespersons)
 
     return [region_id, store_name, manager, street, city, state, zip_code, number_of_salespersons]
