@@ -1,4 +1,4 @@
-# SQLALCHEMY_DATABASE_URI = "mysql+pymysql://qzeng6:123@db:3306/db"
-SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:@127.0.0.1:3306/db"
+SQLALCHEMY_DATABASE_URI = "mysql+pymysql://qzeng6:123@db:3306/db"
+# SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:@127.0.0.1:3306/db"
 SQLALCHEMY_COMMIT_ON_TEARDOWN = True
 SQLALCHEMY_TRACK_MODIFICATIONS = True
