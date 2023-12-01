@@ -11,7 +11,7 @@ product_Images = os.path.join(basePath, 'product_Images')
 # need to specify the template directory if it is not in the base directory
 app = Flask(__name__, template_folder=template_dir)
 CORS(app, resources={r'/*': {
-    'origins': ['http://localhost:8081', 'http://192.168.1.178:8081', 'http://192.168.1.156:8848','http://localhost:63342'],
+    'origins': ['http://localhost:8081', 'http://192.168.1.178:8081', 'http://192.168.1.156:8848','http://localhost:63342','http://159.65.46.9:8081'],
     'supports_credentials': True,
 }})
 db = SQLAlchemy()
